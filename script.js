@@ -1,53 +1,37 @@
-// 1. Magnetic Button Effect
-const magnets = document.querySelectorAll('.magnetic');
-magnets.forEach((btn) => {
-    btn.addEventListener('mousemove', (e) => {
-        const position = btn.getBoundingClientRect();
-        const x = e.pageX - position.left - position.width / 2;
-        const y = e.pageY - position.top - position.height / 2;
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translate(0px, 0px)';
+// 1. Navigation Controller
+document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Remove active classes
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
+
+        // Add active classes
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        document.getElementById(`content-${target}`).classList.add('active');
+
+        // Log the action
+        addLog(`> Accessing directory: /${target.toUpperCase()}... SUCCESS`);
     });
 });
 
-// 2. Trailing Cursor
-const dot = document.querySelector('.cursor-dot');
-const outline = document.querySelector('.cursor-outline');
+// 2. Real-time Clock
+function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
+}
+setInterval(updateClock, 1000);
 
-window.addEventListener('mousemove', (e) => {
-    dot.style.top = `${e.clientY}px`;
-    dot.style.left = `${e.clientX}px`;
-    
-    // Slight delay for the outline
-    setTimeout(() => {
-        outline.style.top = `${e.clientY}px`;
-        outline.style.left = `${e.clientX}px`;
-    }, 50);
-});
+// 3. System Log Generator
+function addLog(message) {
+    const logOutput = document.getElementById('log-output');
+    const newLog = document.createElement('div');
+    newLog.innerText = message;
+    logOutput.prepend(newLog); // New logs at the top
+}
 
-// 3. Preloader Toggle
+// 4. Initial Sequence
 window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    setTimeout(() => {
-        loader.style.transform = 'translateY(-100%)';
-    }, 1500);
-});
-
-// 4. Reveal on Scroll
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('active');
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// 5. Initialize 3D Tilt
-VanillaTilt.init(document.querySelectorAll(".project-card"), {
-    max: 15,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.2,
+    addLog("> System Boot Sequence Complete.");
+    addLog("> User Authenticated: 0x7482");
 });

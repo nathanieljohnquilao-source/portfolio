@@ -3,77 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nathaniel John Quilao</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>ROOT@DEVELOPER_CORE</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="no-scroll">
 
-    <div id="loader">
-        <div class="loader-content">
-            <div class="loader-bar"></div>
-            <span>INITIALIZING...</span>
-        </div>
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+
+    <div class="hud-top">
+        <div class="hud-left">USER: GUEST_SESSION</div>
+        <div class="hud-center">NEURAL_LINK_ACTIVE</div>
+        <div class="hud-right" id="clock">00:00:00</div>
     </div>
 
-    <div class="noise"></div>
+    <main class="os-container">
+        
+        <nav class="os-sidebar">
+            <div class="nav-btn active" data-target="home">01 // HOME</div>
+            <div class="nav-btn" data-target="projects">02 // REPOS</div>
+            <div class="nav-btn" data-target="skills">03 // CORE</div>
+            <div class="nav-btn" data-target="contact">04 // PING</div>
+        </nav>
 
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-
-    <nav class="glass-nav">
-        <div class="container nav-wrapper">
-            <a href="#" class="logo-wrap">
-                <div class="logo-box"></div>
-                <span class="logo-text">DEV.EXE</span>
-            </a>
-            <div class="nav-links">
-                <a href="#projects" class="nav-item">PROJECTS</a>
-                <a href="#about" class="nav-item">ABOUT</a>
-                <a href="#contact" class="nav-item magnetic">CONTACT</a>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <div class="hero-inner">
-                    <h2 class="reveal stagger-1">SYSTEM STATUS: <span class="online">ONLINE</span></h2>
-                    <h1 class="reveal stagger-2">BUILDING <br><span class="gradient-text">THE FUTURE</span></h1>
-                    <p class="reveal stagger-3">Full-stack engineer specializing in high-performance digital solutions and architectural design.</p>
-                    <div class="cta-group reveal stagger-4">
-                        <button class="btn-primary magnetic">EXPLORE WORK</button>
-                        <div class="scroll-indicator">
-                            <div class="mouse"></div>
-                            <span>SCROLL</span>
-                        </div>
-                    </div>
+        <section class="os-window glass">
+            <div id="content-home" class="content-tab active">
+                <h1 class="glitch" data-text="DEVELOPER_ARCHITECT">DEVELOPER_ARCHITECT</h1>
+                <p class="typewriter">Initializing system... Loading portfolio_v4.2... [SUCCESS]</p>
+                <div class="stats-row">
+                    <div class="stat-box"><span>UPTIME</span><br>99.9%</div>
+                    <div class="stat-box"><span>LOC_WRITTEN</span><br>1.2M+</div>
+                    <div class="stat-box"><span>COFFEE_LVL</span><br>CRITICAL</div>
                 </div>
             </div>
-        </section>
 
-        <section id="projects" class="container">
-            <div class="section-header reveal">
-                <span class="sub">PORTFOLIO</span>
-                <h2>SELECTED WORKS</h2>
-            </div>
-            <div class="work-grid">
-                <div class="project-card reveal" data-tilt>
-                    <div class="card-inner">
-                        <div class="card-image" style="background: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop')"></div>
-                        <div class="card-overlay">
-                            <h3>SNAKE ENGINE V3</h3>
-                            <p>NEURAL NETWORK INTEGRATION</p>
-                            <a href="#" class="view-btn">VIEW <i class="fa-solid fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+            <div id="content-projects" class="content-tab">

@@ -1,78 +1,75 @@
 :root {
-    --primary: #00ffaa;
-    --bg: #0a0a0a;
-    --text: #ffffff;
-    --font-mono: 'Space Mono', monospace;
-    --glass: rgba(255, 255, 255, 0.03);
+    --neon: #00f3ff;
+    --dark: #050505;
+    --glass: rgba(0, 243, 255, 0.05);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; cursor: crosshair; }
 
-body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
+body { background: var(--dark); color: var(--neon); height: 100vh; overflow: hidden; }
+
+/* CRT Scanlines Effect */
+.scanlines {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
 }
 
-/* Noise Texture Overlay */
-.noise {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 9999; pointer-events: none; opacity: .05;
-    background-image: url("https://media.giphy.com/media/oEI9uWUicKgS2Uz8Fz/giphy.gif");
+/* Background Grid */
+.grid-bg {
+    position: fixed; inset: 0; z-index: -1;
+    background-image: linear-gradient(var(--glass) 1px, transparent 1px), 
+                      linear-gradient(90deg, var(--glass) 1px, transparent 1px);
+    background-size: 50px 50px;
 }
 
-/* Preloader */
-#loader {
-    position: fixed; inset: 0; background: #000; z-index: 10000;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1);
+/* OS Layout */
+.os-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    grid-template-rows: 100%;
+    height: calc(100vh - 60px);
+    margin-top: 40px;
+    padding: 20px;
+    gap: 20px;
 }
 
-.loader-bar {
-    width: 200px; height: 2px; background: rgba(255,255,255,0.1);
-    position: relative; overflow: hidden;
+.glass {
+    background: var(--glass);
+    border: 1px solid var(--neon);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 20px;
 }
 
-.loader-bar::after {
-    content: ''; position: absolute; left: 0; top: 0; height: 100%;
-    width: 50%; background: var(--primary);
-    animation: loading 1.5s infinite ease-in-out;
+/* Typography & Glitch */
+.glitch {
+    font-size: 3rem; font-weight: bold; position: relative;
+    text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.025em -0.05em 0 rgba(0,255,0,0.75);
+    animation: glitch 500ms infinite;
 }
 
-@keyframes loading {
-    0% { left: -50%; } 100% { left: 100%; }
+@keyframes glitch {
+    0% { transform: translate(0) }
+    20% { transform: translate(-2px, 2px) }
+    40% { transform: translate(-2px, -2px) }
+    60% { transform: translate(2px, 2px) }
+    80% { transform: translate(2px, -2px) }
+    100% { transform: translate(0) }
 }
 
-/* Custom Cursor trailing effect */
-.cursor-dot { width: 8px; height: 8px; background: var(--primary); position: fixed; border-radius: 50%; z-index: 10001; pointer-events: none; }
-.cursor-outline { width: 40px; height: 40px; border: 1px solid var(--primary); position: fixed; border-radius: 50%; z-index: 10001; pointer-events: none; transition: all 0.15s ease-out; }
+/* Tab Switching */
+.content-tab { display: none; }
+.content-tab.active { display: block; animation: fadeIn 0.5s ease; }
 
-/* Gradient Typography */
-.gradient-text {
-    background: linear-gradient(90deg, #fff, var(--primary), #fff);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 5s linear infinite;
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Sidebar Buttons */
+.nav-btn {
+    padding: 15px; border: 1px solid transparent; margin-bottom: 10px;
+    transition: 0.3s;
 }
-
-@keyframes shine { to { background-position: 200% center; } }
-
-/* 3D Project Cards */
-.project-card {
-    position: relative; height: 500px; border-radius: 20px;
-    overflow: hidden; transform-style: preserve-3d;
+.nav-btn:hover, .nav-btn.active {
+    border-color: var(--neon); background: rgba(0, 243, 255, 0.1);
 }
-
-.card-inner { height: 100%; width: 100%; transition: 0.5s; }
-.card-image { height: 100%; background-size: cover !important; transform: translateZ(20px); }
-.card-overlay {
-    position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.9));
-    transform: translateZ(50px);
-}
-
-/* Animations */
-.reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.active { opacity: 1; transform: translateY(0); }

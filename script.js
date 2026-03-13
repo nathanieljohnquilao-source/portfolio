@@ -1,37 +1,83 @@
-// 1. Navigation Controller
-document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active classes
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
-
-        // Add active classes
-        btn.classList.add('active');
-        const target = btn.getAttribute('data-target');
-        document.getElementById(`content-${target}`).classList.add('active');
-
-        // Log the action
-        addLog(`> Accessing directory: /${target.toUpperCase()}... SUCCESS`);
-    });
+/* =====================
+   SCROLL REVEAL
+   ===================== */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.12,
+  rootMargin: '0px 0px -40px 0px'
 });
 
-// 2. Real-time Clock
-function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').innerText = now.toTimeString().split(' ')[0];
-}
-setInterval(updateClock, 1000);
-
-// 3. System Log Generator
-function addLog(message) {
-    const logOutput = document.getElementById('log-output');
-    const newLog = document.createElement('div');
-    newLog.innerText = message;
-    logOutput.prepend(newLog); // New logs at the top
-}
-
-// 4. Initial Sequence
-window.addEventListener('load', () => {
-    addLog("> System Boot Sequence Complete.");
-    addLog("> User Authenticated: 0x7482");
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.08 + 's';
+  revealObserver.observe(el);
 });
+
+/* =====================
+   SMOOTH SCROLL NAV
+   ===================== */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+/* =====================
+   CONTACT FORM
+   ===================== */
+const form = document.getElementById('contact-form');
+if (form) {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const btn = form.querySelector('.btn-send');
+    const originalText = btn.textContent;
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    // Simulate a send delay — replace this with your real form handler (e.g. Formspree)
+    setTimeout(() => {
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = '#86c98a';
+      btn.style.color = '#1C1917';
+      form.reset();
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+      }, 3000);
+    }, 1200);
+  });
+}
+
+/* =====================
+   ACTIVE NAV HIGHLIGHT
+   ===================== */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(link => {
+        link.style.color = '';
+        if (link.getAttribute('href') === '#' + entry.target.id) {
+          link.style.color = 'var(--ink)';
+        }
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+sections.forEach(section => sectionObserver.observe(section));
